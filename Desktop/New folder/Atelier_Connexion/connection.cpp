@@ -1,6 +1,7 @@
 #include "connection.h"
 #include<QDebug>
 
+//test git
 Connection::Connection()
 {
 
