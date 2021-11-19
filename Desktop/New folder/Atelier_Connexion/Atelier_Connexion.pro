@@ -4,8 +4,10 @@
 #
 #-------------------------------------------------
 
-QT       += sql
- QT += sql
+QT       += core gui sql charts printsupport network
+
+
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Atelier_Connexion
@@ -25,18 +27,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += consol
 
 SOURCES += \
+    Societe.cpp \
+    connexion.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    smtp.cpp
 
 HEADERS += \
+    Societe.h \
+    connexion.h \
         mainwindow.h \
-    connection.h
+    smtp.h
 
 FORMS += \
         mainwindow.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    smtp.exe
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/barchart
+INSTALLS += target
