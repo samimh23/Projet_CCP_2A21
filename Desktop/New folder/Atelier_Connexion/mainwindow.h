@@ -35,6 +35,8 @@ private slots:
     void on_sendBtn_clicked();
     void   mailSent(QString status);
 
+      bool digitonlyinput(QString );
+      bool characteronlyinput(QString  );
 
 private:
     Ui::MainWindow *ui;

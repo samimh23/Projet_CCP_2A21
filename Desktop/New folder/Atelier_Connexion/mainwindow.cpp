@@ -20,6 +20,7 @@
 #include "smtp.h"
 #include <QStringList>
 #include<QFileDialog>
+#include<QIntValidator>
 QT_CHARTS_USE_NAMESPACE
 
 
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    ui->id_jarray->setValidator(new QIntValidator(0,999999,this));
     QFile file("C:/Users/don7a/Desktop/New folder/Atelier_Connexion/logs.txt");
               if(!file.open(QFile::WriteOnly | QFile::Text | QFile::Append))
               {
@@ -37,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
               QTextStream out(&file);
     ui->tabSociete->setModel(tmpsoc.afficher());//refresh
     QPieSeries *series = new QPieSeries();
-
         series->append("Sociétés archivé", tmpsoc.nb_archived());
         series->append("Sociétés courantes", tmpsoc.nb_current());
 
@@ -76,6 +77,18 @@ void MainWindow::on_add_jarray_clicked()
     QString nom = ui->ns_jarray->text();
     QString adresse = ui->addy_jarray->text();
 
+
+//    bool test1 = digitonlyinput(adresse);
+//    bool test 2 = characteronlyinput(nom);
+//    bool test 2 = characteronlyinput(nom);
+//    bool test 2 = characteronlyinput(nom);
+
+//    if(  ui->lineEdit_cin->text().length()<4 || testingIDcorrect ==false || testingNOMcorrect==false
+              //     || testingPRENOMcorrect==false || testingEmailcorrect==false || testingPhonecorrect==false )
+            //  {
+            //      QMessageBox::about(nullptr, QObject::tr("Wrong Format "),
+                                                     //QObject::tr("to ADD your employee \nFill up ID_cin and all boxes labeled with [*]\nID_CIN can only be 8 numeric values only !! \n"));
+//              }
     Societe s(id,nom,adresse,field);
 
     bool ajout= s.ajouter();
@@ -259,7 +272,7 @@ void MainWindow::on_refreshLogs_clicked()
 
 
 
-//mailling
+//
 
 void   MainWindow::mailSent(QString status)
 {
@@ -284,4 +297,29 @@ void MainWindow::on_sendBtn_clicked()
     else
         smtp->sendMail("yassine.jarray.14@gmail.com", ui->rcpt->text() ,ui->sujet->text(),ui->msg->toPlainText());
 
+}
+
+bool MainWindow::characteronlyinput(QString checkmeILettersOnly )
+{
+
+        bool testing=true;
+
+        for(int i=0;i<checkmeILettersOnly.length()&&testing==true;i++)
+            if( ( checkmeILettersOnly[i]<65 || checkmeILettersOnly[i] > 122 ) || ( checkmeILettersOnly[i]<=96 && checkmeILettersOnly[i] >= 91)  )
+                testing=false;
+
+        return testing;
+}
+
+
+
+bool MainWindow::digitonlyinput(QString checkmeIFdigit)
+{
+    bool testing=true;
+
+    for(int i=0;i<checkmeIFdigit.length()&&testing==true;i++)
+        if( checkmeIFdigit[i]>57 || checkmeIFdigit[i] < 48)
+            testing=false;
+
+    return testing;
 }
